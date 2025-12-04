@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="XmlBuildDLL.Tests/XmlBuildDLL.Tests.csproj" />
+  <Project Path="XmlBuildDLL/XmlBuildDLL.csproj" Id="3faccfa4-7fa4-4877-bf29-8a6d2f492bc5" />
+</Solution>

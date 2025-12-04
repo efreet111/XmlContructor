@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3FACCFA4-7FA4-4877-BF29-8A6D2F492BC5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XmlBuildDLL</RootNamespace>
+    <AssemblyName>XmlBuildDLL</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseClass\ComonXmlComponent\Catalogos.cs" />
+    <Compile Include="BaseClass\ComonXmlComponent\LegalMonetaryTotal.cs" />
+    <Compile Include="BaseClass\ComonXmlComponent\TaxSubtotal.cs" />
+    <Compile Include="BaseClass\ComonXmlComponent\TaxTotal.cs" />
+    <Compile Include="BaseClass\Modelresponse\BuildResponse.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\AccountingCustomerParty.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\AcountingSupplierParty.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\AdditionalDocumentReference.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\Address.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\AllowanceCharge.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\ApplicationResponse.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\AttachedDocument.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\Attachment.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\BaseDocument21.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\BillingReference.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\BuyersCustomerParty.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\BuyersItemIdentification.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\Contact.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\DatosPacienteSalud.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\Delivery.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\DeliveryTerms.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\DespatchDocumentReference.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\DianExtensions.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\DiscrepancyResponse.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\ExtensiblesNote.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\FinancialAccount.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\ForeignExchangeContract.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\GeneralSalud.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\IdentityDocumentReference.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\InteroperabilidadPT.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\InvoiceLine.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\InvoicePeriod.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\Language.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\LegalMonetaryTotal.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\MandateDocumentReference.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\OrderReference.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\OtherCommunication.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\Party.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\PartyPerson.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\PaymentAlternativeExchangeRate.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\PaymentExchangeRate.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\PaymentMeans.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\PaymentTerms.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\Person.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\PowerOfAttorney.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\PrepaidPayment.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\ReceiptDocumentReference.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\ResidenceAddress.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\SectorSalud.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\SellerContact.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\ServiceProviderParty.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\TaxRepresentativeParty.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\TaxTotal.cs" />
+    <Compile Include="BaseClass\Modelresponse\UBL2.1\WithholdingTaxTotal.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\AccountingCustomerParty\AccountingCustomerParty.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\AccountingCustomerParty\PartyPerson.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\AccountingCustomerParty\PartyPersonIdentityDocumentRef.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\AccountingCustomerParty\ResidenceAddress.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\AccountingSupplierParty\AccountingSupplierParty.cs" />
+    <Compile Include="BaseClass\ComonXmlComponent\Address.cs" />
+    <Compile Include="BaseClass\Dianheaders\BodyXml.cs" />
+    <Compile Include="BaseClass\Dianheaders\DianExtensionsHeader.cs" />
+    <Compile Include="BaseClass\Dianheaders\ExtenncionHeader.cs" />
+    <Compile Include="BaseClass\Dianheaders\OrderReferenciaHeader.cs" />
+    <Compile Include="BaseClass\Dianheaders\SoftwareHeader.cs" />
+    <Compile Include="BaseClass\OrquestatorXmlClass.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\AdditionalDocumentRef.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\BillingReference.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\DiscrepancyResponse.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\Line.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\PaymentTerms.cs" />
+    <Compile Include="BaseClass\XmlBodyComponent\ReceiptDocumentReference.cs" />
+    <Compile Include="Dominio\BuilderXml21Dominio.cs" />
+    <Compile Include="UblDocumentBuilder.cs" />
+    <Compile Include="Dominio\BuilderXmlDominio.cs" />
+    <Compile Include="Dominio\Extensions\IDianExtensionsBuilder.cs" />
+    <Compile Include="Dominio\Extensions\IInteroperabilidadBuilder.cs" />
+    <Compile Include="Dominio\Namespaces\INamespaceProvider.cs" />
+    <Compile Include="Dominio\Strategies\DocumentTypeResolver.cs" />
+    <Compile Include="Dominio\Strategies\IDocumentTypeStrategy.cs" />
+    <Compile Include="Dominio\Strategies\InvoiceDocumentStrategy.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\AccountingCustomerPartyXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\AccountingSupplierPartyXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\AdditionalInformationXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\AddressXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\LegalMonetaryTotalXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\LineItemsXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\NamespaceProvider.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\PartyBuilderXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\ReferencesExtensionsBuilder.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\TaxTotalXmlfill.cs" />
+    <Compile Include="Response\BuildXmlResponse.cs" />
+    <Compile Include="Transversal\HelperObjConverter.cs" />
+    <Compile Include="Transversal\HelpersCodificador.cs" />
+    <Compile Include="Transversal\IXmlPostProcessor.cs" />
+    <Compile Include="XmlBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Aplicacion\" />
+    <Folder Include="UBL2.1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="PROJECT_RULES.md" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
