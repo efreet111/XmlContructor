@@ -9,10 +9,10 @@ using static XmlBuildDLL.BaseClass.ComonXmlComponent.Catalogos;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
-    internal class AccountingCustomerPartyXmlFill
+    internal static class AccountingCustomerPartyXmlFill
     {
 
-        public static XElement AccountingCustomerParty(AccountingCustomerParty docObj)
+        internal static XElement AccountingCustomerParty(AccountingCustomerParty docObj)
         {
             var fe = NamespaceProvider.Fe;
             var cac = NamespaceProvider.Cac;
@@ -46,10 +46,10 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 
             if (docObj.Address != null)
             {
-                var CPhysicalLocation = AddressXmlFill.Address(docObj.Address);
+                //var CPhysicalLocation = AddressXmlFill.FillAddress(docObj.Address);
 
-                if (CPhysicalLocation != null)
-                    CParty.Add(CPhysicalLocation);
+                //if (CPhysicalLocation != null)
+                //    CParty.Add(CPhysicalLocation);
             }
 
             if (docObj.TaxLevelCode != "")

@@ -5,10 +5,9 @@ using XmlBuildDLL.BaseClass.Dianheaders;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
-    internal class AdditionalInformationXmlFill
+    internal static class AdditionalInformationXmlFill
     {
-
-        public static XElement FillAdditionalInformation(OrquestatorXmlClass docObj)
+        internal static XElement FillAdditionalInformation(OrquestatorXmlClass docObj)
         {
             var cac = NamespaceProvider.Cac;
             var cbc = NamespaceProvider.Cbc;
@@ -18,26 +17,26 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
             if (docObj == null || docObj.ExtensionFields == null || docObj.ExtensionFields.Count == 0)
                 return AdditionalInformation;
 
-            foreach (ExtensionsFree extensible in docObj.ExtensionFields)
-            {
-                XElement AdditionalProperty = new XElement(cac + "AdditionalProperty");
+            //foreach (ExtensionsFree extensible in docObj.ExtensionFields)
+            //{
+            //    XElement AdditionalProperty = new XElement(cac + "AdditionalProperty");
 
-                if (!string.IsNullOrWhiteSpace(extensible.AdditionalProperty_ID))
-                {
-                    AdditionalProperty.Add(new XElement(cbc + "ID", extensible.AdditionalProperty_ID));
-                }
+            //    if (!string.IsNullOrWhiteSpace(extensible.AdditionalProperty_ID))
+            //    {
+            //        AdditionalProperty.Add(new XElement(cbc + "ID", extensible.AdditionalProperty_ID));
+            //    }
 
-                if (!string.IsNullOrWhiteSpace(extensible.AdditionalProperty_value))
-                {
-                    AdditionalProperty.Add(new XElement(cbc + "Value", extensible.AdditionalProperty_value));
-                }
+            //    if (!string.IsNullOrWhiteSpace(extensible.AdditionalProperty_value))
+            //    {
+            //        AdditionalProperty.Add(new XElement(cbc + "Value", extensible.AdditionalProperty_value));
+            //    }
 
-                // Only add the AdditionalProperty if it has content
-                if (AdditionalProperty.HasElements)
-                {
-                    AdditionalInformation.Add(AdditionalProperty);
-                }
-            }
+            //    // Only add the AdditionalProperty if it has content
+            //    if (AdditionalProperty.HasElements)
+            //    {
+            //        AdditionalInformation.Add(AdditionalProperty);
+            //    }
+            //}
 
             return AdditionalInformation;
         }

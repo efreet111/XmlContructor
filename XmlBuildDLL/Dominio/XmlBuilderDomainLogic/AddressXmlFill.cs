@@ -8,52 +8,166 @@ using XmlBuildDLL.BaseClass;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
-    internal class AddressXmlFill
+    internal  class AddressXmlFill
     {
-        public static XElement Address(Address address)
+        internal static XElement FillAddress(XmlBuildDLL.BaseClass.Modelresponse.Address adrs, String nameNode)
         {
-
-            var fe = NamespaceProvider.Fe;
-            var cac = NamespaceProvider.Cac;
-            var cbc = NamespaceProvider.Cbc;
-            if (address != null)
+            if (adrs != null)
             {
-                XElement PhysicalLocation = new XElement(fe + "PhysicalLocation");
+                XElement Address = new XElement(NamespaceProvider.Cac + nameNode);
 
-                XElement Address = new XElement(fe + "Address");
+                if (!String.IsNullOrWhiteSpace(adrs.ID))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "ID", adrs.ID));
+                }
 
-                if (address.Department != "")
-                    Address.Add(new XElement(cbc + "Department", address.Department));
+                if (!String.IsNullOrWhiteSpace(adrs.Postbox))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "Postbox", adrs.Postbox));
+                }
 
-                if (address.CitySubdivisionName != "")
-                    Address.Add(new XElement(cbc + "CitySubdivisionName", address.CitySubdivisionName));
+                if (!String.IsNullOrWhiteSpace(adrs.Floor))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "Floor", adrs.Floor));
+                }
 
-                if (address.CityName != "")
-                    Address.Add(new XElement(cbc + "CityName", address.CityName));
+                if (!String.IsNullOrWhiteSpace(adrs.Room))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "Room", adrs.Room));
+                }
 
-                if (address.AddressLine != "")
-                    Address.Add(new XElement(cac + "AddressLine",
-                        new XElement(cbc + "Line", address.AddressLine)
-                        ));
+                if (!String.IsNullOrWhiteSpace(adrs.StreetName))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "StreetName", adrs.StreetName));
+                }
 
-                if (address.Country != "")
-                    Address.Add(new XElement(cac + "Country",
-                        new XElement(cbc + "IdentificationCode", address.Country)
-                        ));
+                if (!String.IsNullOrWhiteSpace(adrs.AdditionalStreetName))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "AdditionalStreetName", adrs.AdditionalStreetName));
+                }
 
-                if (Address.HasElements)
-                    PhysicalLocation.Add(Address);
+                if (!String.IsNullOrWhiteSpace(adrs.BlockName))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "BlockName", adrs.BlockName));
+                }
 
-                if (PhysicalLocation.HasElements)
-                    return PhysicalLocation;
-            }
-            else
-            {
-                return null;
+                if (!String.IsNullOrWhiteSpace(adrs.BuildingName))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "BuildingName", adrs.BuildingName));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.BuildingNumber))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "BuildingNumber", adrs.BuildingNumber));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.InhouseMail))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "InhouseMail", adrs.InhouseMail));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.MarkAttention))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "MarkAttention", adrs.MarkAttention));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.MarkCare))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "MarkCare", adrs.MarkCare));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.PlotIdentification))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "PlotIdentification", adrs.PlotIdentification));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.CitySubdivisionName))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "CitySubdivisionName", adrs.CitySubdivisionName));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.CityName))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "CityName", adrs.CityName));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.PostalZone))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "PostalZone", adrs.PostalZone));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.CountrySubentity))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "CountrySubentity", adrs.CountrySubentity));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.CountrySubentityCode))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "CountrySubentityCode", adrs.CountrySubentityCode));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.Region))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "Region", adrs.Region));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.District))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "District", adrs.District));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.TimezoneOffset))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "TimezoneOffset", adrs.TimezoneOffset));
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.AddressLine))
+                {
+                    XElement AddressLine = new XElement(NamespaceProvider.Cac + "AddressLine");
+
+                    AddressLine.Add(new XElement(NamespaceProvider.Cbc + "Line", adrs.AddressLine));
+
+                    Address.Add(AddressLine);
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.CountryIdentificationCode))
+                {
+                    XElement Country = new XElement(NamespaceProvider.Cac + "Country");
+
+                    Country.Add(new XElement(NamespaceProvider.Cbc + "IdentificationCode", adrs.CountryIdentificationCode));
+
+                    if (!String.IsNullOrWhiteSpace(adrs.CountryName) && !String.IsNullOrWhiteSpace(adrs.CountryLanguageID))
+                    {
+                        Country.Add(new XElement(NamespaceProvider.Cbc + "Name", adrs.CountryName, new XAttribute("languageID", adrs.CountryLanguageID)));
+                    }
+
+                    Address.Add(Country);
+                }
+
+                if (!String.IsNullOrWhiteSpace(adrs.LocationCoordinateLatitudeDegreesMeasure) && !String.IsNullOrWhiteSpace(adrs.LocationCoordinateLatitudeMinutesMeasure) && !String.IsNullOrWhiteSpace(adrs.LocationCoordinateLatitudeDirectionCode) && !String.IsNullOrWhiteSpace(adrs.LocationCoordinateLongitudeDegreesMeasure) && !String.IsNullOrWhiteSpace(adrs.LocationCoordinateLongitudeMinutesMeasure) && !String.IsNullOrWhiteSpace(adrs.LocationCoordinateLongitudeDirectionCode))
+                {
+                    XElement LocationCoordinate = new XElement(NamespaceProvider.Cac + "LocationCoordinate");
+
+                    LocationCoordinate.Add(new XElement(NamespaceProvider.Cbc + "LatitudeDegreesMeasure", adrs.LocationCoordinateLatitudeDegreesMeasure, new XAttribute("unitCode", "A")));
+
+                    LocationCoordinate.Add(new XElement(NamespaceProvider.Cbc + "LatitudeMinutesMeasure", adrs.LocationCoordinateLatitudeMinutesMeasure, new XAttribute("unitCode", "A")));
+
+                    LocationCoordinate.Add(new XElement(NamespaceProvider.Cbc + "LatitudeDirectionCode", adrs.LocationCoordinateLatitudeDirectionCode));
+
+                    LocationCoordinate.Add(new XElement(NamespaceProvider.Cbc + "LongitudeDegreesMeasure", adrs.LocationCoordinateLongitudeDegreesMeasure, new XAttribute("unitCode", "A")));
+
+                    LocationCoordinate.Add(new XElement(NamespaceProvider.Cbc + "LongitudeMinutesMeasure", adrs.LocationCoordinateLongitudeMinutesMeasure, new XAttribute("unitCode", "A")));
+
+                    LocationCoordinate.Add(new XElement(NamespaceProvider.Cbc + "LongitudeDirectionCode", adrs.LocationCoordinateLongitudeDirectionCode));
+
+                    Address.Add(LocationCoordinate);
+                }
+
+                return Address;
+
             }
 
             return null;
         }
-
     }
 }

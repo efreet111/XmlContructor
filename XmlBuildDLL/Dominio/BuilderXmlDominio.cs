@@ -13,7 +13,7 @@ namespace XmlBuildDLL.Dominio
     public class BuilderXmlDominio
     {
         private OrquestatorXmlClass OrquestatorObj;
-        private XElement documentXML;
+        //private XElement documentXML;
         private XNamespace fe;
         private XNamespace cac;
         private XNamespace cbc;

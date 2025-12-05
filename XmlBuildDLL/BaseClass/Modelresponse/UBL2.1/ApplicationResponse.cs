@@ -1,11 +1,8 @@
-﻿using DocumentBuildCO.Common;
-using DocumentBuildCO.Response;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DocumentBuildCO.Builder.UBL2._1;
 using XmlBuildDLL.BaseClass.Modelresponse;
 using System.Xml;
 using System.Xml.Linq;

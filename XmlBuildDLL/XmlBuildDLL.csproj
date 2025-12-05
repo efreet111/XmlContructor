@@ -44,11 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aplicacion\BuildXmlResponse.cs" />
     <Compile Include="BaseClass\ComonXmlComponent\Catalogos.cs" />
     <Compile Include="BaseClass\ComonXmlComponent\LegalMonetaryTotal.cs" />
     <Compile Include="BaseClass\ComonXmlComponent\TaxSubtotal.cs" />
     <Compile Include="BaseClass\ComonXmlComponent\TaxTotal.cs" />
-    <Compile Include="BaseClass\Modelresponse\BuildResponse.cs" />
     <Compile Include="BaseClass\Modelresponse\UBL2.1\AccountingCustomerParty.cs" />
     <Compile Include="BaseClass\Modelresponse\UBL2.1\AcountingSupplierParty.cs" />
     <Compile Include="BaseClass\Modelresponse\UBL2.1\AdditionalDocumentReference.cs" />
@@ -116,9 +116,26 @@
     <Compile Include="BaseClass\XmlBodyComponent\Line.cs" />
     <Compile Include="BaseClass\XmlBodyComponent\PaymentTerms.cs" />
     <Compile Include="BaseClass\XmlBodyComponent\ReceiptDocumentReference.cs" />
-    <Compile Include="Dominio\BuilderXml21Dominio.cs" />
+    <Compile Include="Dominio\BuilderXmlInvoiceDominio.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\AcountingSupplierPartyXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\AdditionalDocumentReferenceXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\BillingReferenceXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\ContactXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\DespatchDocumentReferenceXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\DianExtensionsXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\DocumentReferenceFillXml.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\HeaderExtensionsXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\InvoicePeriodXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\LegalEntityXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\OrderReferenceXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\PartyTaxSchemeXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\ReceiptDocumentReferenceXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\ShareholderPartyParty.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\ShareholderPartyXmlFill.cs" />
+    <Compile Include="Dominio\XmlBuilderDomainLogic\ShareHolderXmlFill.cs" />
+    <Compile Include="Properties\InternalsVisibleTo.cs" />
+    <Compile Include="Transversal\HelpersConstantes.cs" />
     <Compile Include="UblDocumentBuilder.cs" />
-    <Compile Include="Dominio\BuilderXmlDominio.cs" />
     <Compile Include="Dominio\Extensions\IDianExtensionsBuilder.cs" />
     <Compile Include="Dominio\Extensions\IInteroperabilidadBuilder.cs" />
     <Compile Include="Dominio\Namespaces\INamespaceProvider.cs" />
@@ -135,15 +152,13 @@
     <Compile Include="Dominio\XmlBuilderDomainLogic\PartyBuilderXmlFill.cs" />
     <Compile Include="Dominio\XmlBuilderDomainLogic\ReferencesExtensionsBuilder.cs" />
     <Compile Include="Dominio\XmlBuilderDomainLogic\TaxTotalXmlfill.cs" />
-    <Compile Include="Response\BuildXmlResponse.cs" />
     <Compile Include="Transversal\HelperObjConverter.cs" />
     <Compile Include="Transversal\HelpersCodificador.cs" />
     <Compile Include="Transversal\IXmlPostProcessor.cs" />
-    <Compile Include="XmlBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Aplicacion\" />
+    <Folder Include="Aplicacion\Dto\" />
     <Folder Include="UBL2.1\" />
   </ItemGroup>
   <ItemGroup>

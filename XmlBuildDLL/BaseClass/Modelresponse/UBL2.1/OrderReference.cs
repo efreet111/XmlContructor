@@ -26,7 +26,7 @@ namespace XmlBuildDLL.BaseClass.Modelresponse
         //
         ////root/cac:OrderReference/cbc:UUID@schemeName
         //
-        public string UUID_SchemeName { get; set; }
+        public string UUIDSchemeName { get; set; }
 
         //
         ////root/cac:OrderReference/cbc:IssueDate

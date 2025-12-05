@@ -8,9 +8,9 @@ using XmlBuildDLL.BaseClass.ComonXmlComponent;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
-    internal class TaxTotalXmlfill
+    internal static class TaxTotalXmlfill
     {
-        public static XElement TaxTotal(TaxTotal TaxTotal)
+        internal static XElement TaxTotal(TaxTotal TaxTotal)
         {
             var fe = NamespaceProvider.Fe;
             var cac = NamespaceProvider.Cac;

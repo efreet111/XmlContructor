@@ -144,60 +144,60 @@ namespace XmlBuildDLL.BaseClass.Modelresponse
         /// ../de:Address/cac:AddressLine/cbc:Line
         
         /// 
-        public String AddressLine_Line { get; set; }
+        public String AddressLine { get; set; }
 
         
         /// ../de:Address/cac:Country/cbc:IdentificationCode
         
         /// 
-        public String Country_IdentificationCode { get; set; }
+        public String CountryIdentificationCode { get; set; }
 
         
         /// ../de:Address/cac:Country/cbc:Name
         
         /// 
-        public String Country_Name { get; set; }
+        public String CountryName { get; set; }
 
         
         /// ../de:Address/cac:Country/cbc:Name/@languageID
         
         /// 
-        public String Country_LanguageID { get; set; } //@languageID
+        public String CountryLanguageID { get; set; } //@languageID
 
         
         /// ../de:Address/cac:LocationCoordinate/cbc:LatitudeDegreesMeasure
         
         /// 
-        public String LocationCoordinate_LatitudeDegreesMeasure { get; set; }
+        public String LocationCoordinateLatitudeDegreesMeasure { get; set; }
 
         
         /// ../de:Address/cac:LocationCoordinate/cbc:LatitudeMinutesMeasure
         
         /// 
-        public String LocationCoordinate_LatitudeMinutesMeasure { get; set; }
+        public String LocationCoordinateLatitudeMinutesMeasure { get; set; }
 
         
         /// ../de:Address/cac:LocationCoordinate/cbc:LatitudeDirectionCode
         
         /// 
-        public String LocationCoordinate_LatitudeDirectionCode { get; set; }
+        public String LocationCoordinateLatitudeDirectionCode { get; set; }
 
         
         /// ../de:Address/cac:LocationCoordinate/cbc:LongitudeDegreesMeasure
         
         /// 
-        public String LocationCoordinate_LongitudeDegreesMeasure { get; set; }
+        public String LocationCoordinateLongitudeDegreesMeasure { get; set; }
 
         
         /// ../de:Address/cac:LocationCoordinate/cbc:LongitudeMinutesMeasure
         
         /// 
-        public String LocationCoordinate_LongitudeMinutesMeasure { get; set; }
+        public String LocationCoordinateLongitudeMinutesMeasure { get; set; }
 
         
         /// ../de:Address/cac:LocationCoordinate/cbc:LongitudeDirectionCode
         
         /// 
-        public String LocationCoordinate_LongitudeDirectionCode { get; set; }
+        public String LocationCoordinateLongitudeDirectionCode { get; set; }
     }
 }

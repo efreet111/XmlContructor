@@ -11,9 +11,9 @@ using static XmlBuildDLL.BaseClass.ComonXmlComponent.Catalogos;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
-    internal class AccountingSupplierPartyXmlFill
+    internal static class AccountingSupplierPartyXmlFill
     {
-        public static XElement AccountingSupplierParty(AccountingSupplierParty docObj)
+        internal static XElement AccountingSupplierParty(AccountingSupplierParty docObj)
         {
             var fe = NamespaceProvider.Fe;
             var cac = NamespaceProvider.Cac;

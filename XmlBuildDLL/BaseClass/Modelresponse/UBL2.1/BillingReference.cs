@@ -38,32 +38,32 @@ namespace XmlBuildDLL.BaseClass.Modelresponse
         
         public String CreditNoteUUID { get; set; }
 
-        @
+        
         ///de:root/de:BillingReference/section/cbc:UUID@schemeName
         
         public String CreditNoteschemeName { get; set; }
 
-        @
+
         ///de:root/de:BillingReference/section/cbc:UUID@schemeName
         
         public String CreditNoteUUIDschemeName { get; set; }
 
-        @
+
         ///de:root/de:BillingReference/section/cbc:IssueDate
         
         public DateTime? CreditNoteIssueDate { get; set; }
 
-        @
+ 
         ///de:root/de:BillingReference/section/cbc:DocumentTypeCode
         
         public String CreditNotesDocumentTypeCode { get; set; }
 
-        @
+
         ///de:root/de:BillingReference/section/cbc:DocumentTypeCode@listURI
         
         public String CreditNotesDocumentTypeCode_listURI { get; set; }
 
-        @
+
         ///de:root/de:BillingReference/section/cbc:DocumentType 
         
         public String CreditNotesDocumentType { get; set; }
@@ -79,12 +79,12 @@ namespace XmlBuildDLL.BaseClass.Modelresponse
         
         public String DebitNoteUUID { get; set; }
 
-        @
+
         ///de:root/de:BillingReference/de:DebitNoteDocumentReference/cbc:UUID@schemeName
         
         public String DebitNoteschemeName { get; set; }
 
-        @
+
         ///de:root/de:BillingReference/de:DebitNoteDocumentReference/cbc:IssueDate
         
         public DateTime? DebitNoteIssueDate { get; set; }
@@ -99,12 +99,12 @@ namespace XmlBuildDLL.BaseClass.Modelresponse
         
         public String InvoiceUUID { get; set; }
 
-        @
+
         ///de:root/de:BillingReference/de:DebitNoteDocumentReference/cbc:UUID@schemeName
         
         public String InvoiceschemeName { get; set; }
 
-        @
+
         ///de:root/de:BillingReference/de:DebitNoteDocumentReference/cbc:IssueDate
         
         public DateTime? InvoiceIssueDate { get; set; }

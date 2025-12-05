@@ -8,9 +8,9 @@ namespace XmlBuildDLL.BaseClass.Dianheaders
 {
     public class ExtensionsFree
     {
-        public String AdditionalProperty_ID { get; set; }
+        public String AdditionalPropertyID { get; set; }
 
-        public String AdditionalProperty_value { get; set; }
+        public String AdditionalPropertyValue { get; set; }
 
     }
 }

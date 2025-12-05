@@ -4,7 +4,7 @@ using XmlBuildDLL.BaseClass.Modelresponse;
 
 namespace XmlBuildDLL.DocumentClass.UBL2._1
 {
-    public class BaseDocument21
+    public class BillingDocument21Object
     {
         
         /// Nodo para identificar si es Invoice, DebitNote o CreditNote
@@ -29,11 +29,11 @@ namespace XmlBuildDLL.DocumentClass.UBL2._1
 
         public String UUID { get; set; }
 
-        public String UUID_schemeName { get; set; }
+        public String UUIDSchemeName { get; set; }
 
-        public String UUID_schemeID { get; set; }
+        public String UUIDSchemeID { get; set; }
 
-        public String UUID_Raw { get; set; } //No se usa en el XML
+        public String UUIDRaw { get; set; } //No se usa en el XML
 
         public DateTime IssueDate { get; set; }
 

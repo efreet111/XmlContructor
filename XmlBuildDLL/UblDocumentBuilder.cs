@@ -1,48 +1,51 @@
-﻿using XmlBuildDLL.BaseClass.Modelresponse;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using XmlBuildDLL.Aplicacion;
+using XmlBuildDLL.BaseClass.Modelresponse;
 using XmlBuildDLL.DocumentClass.UBL2._1;
+using XmlBuildDLL.Dominio;
+using XmlBuildDLL.Transversal;
 
 namespace XmlBuildDLL
 {
     public class UblDocumentBuilder
     {
-        public BuildResponse Build(BaseDocument21 data, ref int cantidadDecimales, List<string> nombres)
+        public BuildXmlResponse Build(BillingDocument21Object data, ref int cantidadDecimales, List<string> nombres)
         {
-            BuildResponse response = new BuildResponse();
+            BuildXmlResponse response = new BuildXmlResponse();
 
-            BuildDocument21 buildDoc = null;
+            BuilderXmlInvoiceDominio buildDoc = null;
 
             switch (data.InvoiceTypeCode)
             {
-                case Constantes.TipoDocumento.FacturaNacional:
-                case Constantes.TipoDocumento.FacturaExportacion:
-                case Constantes.TipoDocumento.FacturaContingenciaEmisor:
-                case Constantes.TipoDocumento.FacturaContingenciaDian:
-                case Constantes.TipoDocumento.FacturaDocumentoSoporte:
-                    buildDoc = new Builder.UBL2._1.BuildDocument21();
+                case HelpersConstantes.TipoDocumento.Fact:
+                case HelpersConstantes.TipoDocumento.FactExportacion:
+                case HelpersConstantes.TipoDocumento.FactContingenciaEmisor:
+                case HelpersConstantes.TipoDocumento.FactContingenciaDian:
+                case HelpersConstantes.TipoDocumento.FactDocumentoSoporte:
+                     buildDoc = new BuilderXmlInvoiceDominio();
                     break;
 
-                case Constantes.TipoDocumento.NotaCredito:
-                    buildDoc = new Builder.UBL2._1.CreditNote();
+                case HelpersConstantes.TipoDocumento.NC:
+                    //buildDoc = new Builder.UBL2._1.CreditNote();
                     break;
 
-                case Constantes.TipoDocumento.NotaDebito:
-                    buildDoc = new Builder.UBL2._1.DebitNote();
+                case HelpersConstantes.TipoDocumento.ND:
+                    //buildDoc = new Builder.UBL2._1.DebitNote();
                     break;
 
-                case Constantes.TipoDocumento.NotaAjusteDocumentoSoporte:
+                case HelpersConstantes.TipoDocumento.NotaAjusteDocumentoSoporte:
                     // se reutiliza la de nota crédito pero espera cambiarlo
-                    buildDoc = new Builder.UBL2._1.CreditNote();
+                    //buildDoc = new Builder.UBL2._1.CreditNote();
                     break;
 
                 default:
-                    buildDoc = new Builder.UBL2._1.BuildDocument21();
+                    buildDoc = new BuilderXmlInvoiceDominio();
                     break;
             }
 
-            data = ObjectConversion<DocumentClass.UBL2._1.BaseDocument21>.FromJson(ObjectConversion<DocumentClass.UBL2._1.BaseDocument21>.ToJson(data));
+            data = HelperObjConverter<BillingDocument21Object>.FromJson(HelperObjConverter<BillingDocument21Object>.ToJson(data));
 
-            response.xml = buildDoc.BuildXML(data, ref cantidadDecimales, nombres);
+            response.XmlFile = buildDoc.BuildXML(data, ref cantidadDecimales, nombres);
 
             return response;
         }

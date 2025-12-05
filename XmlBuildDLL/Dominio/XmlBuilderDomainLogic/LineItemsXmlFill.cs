@@ -8,9 +8,9 @@ using XmlBuildDLL.BaseClass.XmlBodyComponent;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
-    internal class LineItemsXmlFill
+    internal static class LineItemsXmlFill
     {
-        public XElement LineItems(Line line, String TypeDocumentCode)
+        internal static XElement LineItems(Line line, String TypeDocumentCode)
         {
             var fe = NamespaceProvider.Fe;
             var cac = NamespaceProvider.Cac;

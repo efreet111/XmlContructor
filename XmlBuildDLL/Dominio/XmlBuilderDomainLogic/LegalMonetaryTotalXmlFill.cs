@@ -10,9 +10,9 @@ using XmlBuildDLL.BaseClass.ComonXmlComponent;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
-    internal class LegalMonetaryTotalXmlFill
+    internal static class LegalMonetaryTotalXmlFill
     {
-        public XElement LegalMonetaryTotal(LegalMonetaryTotal docObj)
+        internal static XElement LegalMonetaryTotal(LegalMonetaryTotal docObj)
         {
             var fe = NamespaceProvider.Fe;
             var cbc = NamespaceProvider.Cbc;
