@@ -189,7 +189,5 @@ namespace XmlBuildDLL.BaseClass.Modelresponse
         public List<ServiceProviderParty> ServiceProviderParty { get; set; } //grupo [0..*] ***
 
         public List<PowerOfAttorney> PowerOfAttorney { get; set; } //grupo [0..*] ***
-
-        public FinancialAccount FinancialAccount { get; set; } //grupo [0..1]
     }
 }

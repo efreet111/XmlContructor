@@ -91,6 +91,11 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
                     Address.Add(new XElement(NamespaceProvider.Cbc + "CityName", adrs.CityName));
                 }
 
+                if (!String.IsNullOrWhiteSpace(adrs.Department))
+                {
+                    Address.Add(new XElement(NamespaceProvider.Cbc + "Department", adrs.Department));
+                }
+
                 if (!String.IsNullOrWhiteSpace(adrs.PostalZone))
                 {
                     Address.Add(new XElement(NamespaceProvider.Cbc + "PostalZone", adrs.PostalZone));

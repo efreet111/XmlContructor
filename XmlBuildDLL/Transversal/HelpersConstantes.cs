@@ -8,6 +8,17 @@ namespace XmlBuildDLL.Transversal
 {
     public  class HelpersConstantes
     {
+        public class Catalog
+        {
+            public static string UBLVersionID20 = "UBL 2.0";
+            public static string UBLVersionID21 = "UBL 2.1";
+            public static string CustomizationID = "1";
+            public static string ProfileID10 = "DIAN 1.0";
+            public static string ProfileID21 = "DIAN 2.1";
+            public static string DIAN_AgencyName = "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)";
+            public static string DIAN_ID = "195";
+            public static string URI_InvoiceType = "http://www.dian.gov.co/contratos/facturaelectronica/v1/InvoiceType";
+        }
         public static class TipoCufe
         {
             public const string CufeSha384 = "CUFE-SHA384";

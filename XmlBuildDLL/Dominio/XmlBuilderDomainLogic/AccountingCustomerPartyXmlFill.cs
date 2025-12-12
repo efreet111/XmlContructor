@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using XmlBuildDLL.BaseClass.AccountingCustomerParty;
+using XmlBuildDLL.BaseClass.Modelresponse;
 using static XmlBuildDLL.BaseClass.ComonXmlComponent.Catalogos;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
@@ -12,159 +12,112 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
     internal static class AccountingCustomerPartyXmlFill
     {
 
-        internal static XElement AccountingCustomerParty(AccountingCustomerParty docObj)
+        internal static XElement FillAccountingCustomerParty(AccountingCustomerParty objCustomerParty)
         {
-            var fe = NamespaceProvider.Fe;
-            var cac = NamespaceProvider.Cac;
-            var cbc = NamespaceProvider.Cbc;
-            XElement CustomerParty = new XElement(fe + "AccountingCustomerParty");
-
-            XElement CAdditionalAccountID = new XElement(cbc + "AdditionalAccountID", docObj.AdditionalAccountID);
-            CustomerParty.Add(CAdditionalAccountID);
-
-            XElement CParty = new XElement(fe + "Party");
-
-            if (docObj.PartyIdentificationID != "" && docObj.PartyIdentificationID != null)
+            if (objCustomerParty != null)
             {
-                XElement CPartyIdentification = new XElement(cac + "PartyIdentification",
-                        new XElement(cbc + "ID", docObj.PartyIdentificationID,
-                            new XAttribute("schemeAgencyID", Catalog.DIAN_ID),
-                            new XAttribute("schemeAgencyName", Catalog.DIAN_AgencyName),
-                            new XAttribute("schemeID", docObj.PartyIdentificationIDSchemeID)
-                    )
-                );
-                CParty.Add(CPartyIdentification);
-            }
+                XElement CustomerParty = new XElement(NamespaceProvider.Cac + "AccountingCustomerParty");
 
-            if (docObj.PartyName != "")
-            {
-                XElement SPartyName = new XElement(cac + "PartyName",
-                    new XElement(cbc + "Name", docObj.PartyName)
-                );
-                CParty.Add(SPartyName);
-            }
-
-            if (docObj.Address != null)
-            {
-                //var CPhysicalLocation = AddressXmlFill.FillAddress(docObj.Address);
-
-                //if (CPhysicalLocation != null)
-                //    CParty.Add(CPhysicalLocation);
-            }
-
-            if (docObj.TaxLevelCode != "")
-            {
-                XElement CPartyTaxScheme = new XElement(fe + "PartyTaxScheme",
-                    new XElement(cbc + "TaxLevelCode", docObj.TaxLevelCode),
-                    new XElement(cac + "TaxScheme")
-                    );
-                CParty.Add(CPartyTaxScheme);
-            }
-
-            if (docObj.RegistrationName != "")
-            {
-                XElement CRegistrationName = new XElement(fe + "PartyLegalEntity",
-                    new XElement(cbc + "RegistrationName", docObj.RegistrationName)
-                );
-                CParty.Add(CRegistrationName);
-            }
-
-            if (docObj.Telephone != "")
-            {
-                XElement CTelephone = new XElement(cac + "Contact",
-                    new XElement(cbc + "Telephone", docObj.Telephone)
-                );
-                CParty.Add(CTelephone);
-            }
-
-            if (docObj.PartyPerson != null)
-            {
-                XElement CPerson = new XElement(fe + "Person");
-
-
-                if (docObj.PartyPerson.ID > 0)
-                    CPerson.Add(new XElement(cbc + "ID", docObj.PartyPerson.ID,
-                        new XAttribute("schemeName", docObj.PartyPerson.schemeName))
-                        );
-
-                if (docObj.PartyPerson.FirstName != "")
-                    CPerson.Add(new XElement(cbc + "FirstName", docObj.PartyPerson.FirstName));
-
-                if (docObj.PartyPerson.FamilyName != "")
-                    CPerson.Add(new XElement(cbc + "FamilyName", docObj.PartyPerson.FamilyName));
-
-
-                if (docObj.PartyPerson.IdentityDocumentReference != null)
+                if (!String.IsNullOrEmpty(objCustomerParty.AdditionalAccountID.ToString()))
                 {
-                    XElement CPartyIdentityDocumentReference = new XElement(fe + "IdentityDocumentReference");
-                    foreach (var item in docObj.PartyPerson.IdentityDocumentReference)
-                    {
-                        CPartyIdentityDocumentReference = new XElement(cbc + "ID", item.ID,
-                                     new XAttribute("schemeName", docObj.PartyPerson.schemeName));
+                    XElement SAdditionalAccountID = new XElement(NamespaceProvider.Cbc + "AdditionalAccountID", objCustomerParty.AdditionalAccountID);
 
-                        if (string.IsNullOrEmpty(item.Name))
-                        {
-                            XElement CPartyIssuerParty = new XElement(fe + "IssuerParty");
+                    if (objCustomerParty.AdditionalAccountID_SchemeAgencyID != "")
+                        SAdditionalAccountID.Add(new XAttribute("schemeAgencyID", objCustomerParty.AdditionalAccountID_SchemeAgencyID));
 
-                            XElement CPartyPersonPartyName = new XElement(fe + "PartyName",
-                                     new XElement(cbc + "Name", item.Name)
-                                    );
+                    if (objCustomerParty.AdditionalAccountID_SchemeID != "")
+                        SAdditionalAccountID.Add(new XAttribute("schemeID", objCustomerParty.AdditionalAccountID_SchemeID));
 
-                            XElement CPartyPersonPostalAddress = new XElement(fe + "PostalAddress",
-                                   new XElement(cbc + "Country", item.Country)
-                                  );
+                    if (objCustomerParty.AdditionalAccountID_SchemeName != "")
+                        SAdditionalAccountID.Add(new XAttribute("schemeName", objCustomerParty.AdditionalAccountID_SchemeName));
 
-                            CPartyIssuerParty.Add(CPartyPersonPartyName);
-                            CPartyIssuerParty.Add(CPartyPersonPostalAddress);
-                            CPartyIdentityDocumentReference.Add(CPartyIssuerParty);
-                        }
-
-                        CPartyIdentityDocumentReference.Add(CPartyIdentityDocumentReference);
-                    }
-                    CPerson.Add(CPartyIdentityDocumentReference);
-
-                    if (docObj.PartyPerson.ResidenceAddress != null)
-                    {
-                        XElement CPartyResidenceAddress = new XElement(fe + "ResidenceAddress");
-
-                        if (docObj.PartyPerson.ResidenceAddress.ID > 0)
-                            CPartyResidenceAddress.Add(new XElement(fe + "PartyName", docObj.PartyPerson.ResidenceAddress.ID),
-                                      new XAttribute("schemeName", docObj.PartyPerson.ResidenceAddress.schemeName)
-                                      );
-
-                        if (docObj.PartyPerson.ResidenceAddress.CityName != "")
-                            CPartyResidenceAddress.Add(new XElement(cbc + "CityName", docObj.PartyPerson.FirstName));
-
-
-                        if (docObj.PartyPerson.ResidenceAddress.Line != "")
-                        {
-                            XElement CPartyAddressLine = new XElement(fe + "AddressLine",
-                               new XElement(cbc + "Line", docObj.PartyPerson.ResidenceAddress.Line)
-                                  );
-                            CPartyResidenceAddress.Add(CPartyAddressLine);
-                        }
-
-                        if (docObj.PartyPerson.ResidenceAddress.Country != "")
-                            CPartyResidenceAddress.Add(new XElement(cbc + "Country", docObj.PartyPerson.FirstName));
-
-                        CPerson.Add(CPartyResidenceAddress);
-                    }
-
-                    if (CPerson.HasElements)
-                        CParty.Add();
-
-                    if (docObj.PartyPerson.ID > 0)
-                        CPerson.Add(new XElement(cbc + "ID", docObj.PartyPerson.ID,
-                            new XAttribute("schemeName", docObj.PartyPerson.schemeName))
-                            );
-
+                    CustomerParty.Add(SAdditionalAccountID);
                 }
 
-                CustomerParty.Add(CParty);
+                XElement party = new XElement(NamespaceProvider.Cac + "Party");
 
+                if (!String.IsNullOrEmpty(objCustomerParty.IndustryClassificationCode))
+                    party.Add(new XElement(NamespaceProvider.Cbc + "IndustryClassificationCode", objCustomerParty.IndustryClassificationCode));
+
+
+
+                if (!String.IsNullOrEmpty(objCustomerParty.PartyIdentificationID))
+                {
+                    XElement PartyIdentification = new XElement(NamespaceProvider.Cac + "PartyIdentification");
+
+                    XElement PartyIdentificationID = new XElement(NamespaceProvider.Cbc + "ID", objCustomerParty.PartyIdentificationID);
+
+                    if (!String.IsNullOrEmpty(objCustomerParty.PartyIdentificationID_SchemeName))
+                    {
+                        PartyIdentificationID.Add(new XAttribute("schemeName", objCustomerParty.PartyIdentificationID_SchemeName));
+                    }
+
+                    if (!String.IsNullOrEmpty(objCustomerParty.PartyIdentificationID_SchemeID))
+                    {
+                        PartyIdentificationID.Add(new XAttribute("schemeID", objCustomerParty.PartyIdentificationID_SchemeID));
+                    }
+
+                    PartyIdentification.Add(PartyIdentificationID);
+
+                    party.Add(PartyIdentification);
+                }
+
+                if (!String.IsNullOrEmpty(objCustomerParty.PartyName))
+                {
+
+                    party.Add(new XElement(NamespaceProvider.Cac + "PartyName",
+                        new XElement(NamespaceProvider.Cbc + "Name", objCustomerParty.PartyName)));
+                }
+
+                if (objCustomerParty.PhysicalLocation != null)
+                {
+                    XElement physicalLocation = new XElement(NamespaceProvider.Cac + "PhysicalLocation"); // TODO: LLamar a Adress
+                    physicalLocation.Add(AddressXmlFill.FillAddress(objCustomerParty.PhysicalLocation, "Address"));
+                    if (physicalLocation.HasElements)
+                    {
+                        party.Add(physicalLocation);
+                    }
+                }
+
+
+
+                if (objCustomerParty.TaxScheme != null)
+                {
+                    //XElement partytax = FillPartyTaxScheme(de, this.obj.AcountingSupplierParty.TaxScheme);
+                    XElement partytax = PartyTaxSchemeXmlFill.FillPartyTaxScheme( objCustomerParty.TaxScheme);
+                    if (partytax.HasElements)
+                        party.Add(partytax);
+                }
+
+
+                if (objCustomerParty.LegalEntity != null)
+                {
+                    //XElement legalEntity = FillLegalEntity(de, obj.AccountingCustomerParty.LegalEntity);
+                    XElement legalEntity = LegalEntityXmlFill.FillLegalEntity(objCustomerParty.LegalEntity);
+                    if (legalEntity.HasElements)
+                        party.Add(legalEntity);
+                }
+
+                if (objCustomerParty.ACContact != null)
+                {
+                    XElement Contact = AccoutCustomerContactXmlFill.FillAccoutCustomerContact( objCustomerParty.ACContact);
+                    if (Contact.HasElements)
+                        party.Add(Contact);
+                }
+
+
+                CustomerParty.Add(party);
+
+                return CustomerParty;
             }
-            return CustomerParty;
+            else
+            {
+                return null;
+            }
+
         }
 
     }
+
 }
+

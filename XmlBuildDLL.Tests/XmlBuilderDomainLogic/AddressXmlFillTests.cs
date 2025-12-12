@@ -21,7 +21,7 @@ namespace XmlBuildDLL.Tests.XmlBuilderDomainLogic
             };
             var result = AddressXmlFill.FillAddress(adrs, "Address");
             Assert.IsNotNull(result);
-            var addressEl = result.Element(NamespaceProvider.Fe + "Address");
+            var addressEl = result; // result ya es cac:Address
             Assert.IsNotNull(addressEl);
             Assert.AreEqual("Antioquia", addressEl.Element(NamespaceProvider.Cbc + "Department")?.Value);
             Assert.AreEqual("Subdiv1", addressEl.Element(NamespaceProvider.Cbc + "CitySubdivisionName")?.Value);

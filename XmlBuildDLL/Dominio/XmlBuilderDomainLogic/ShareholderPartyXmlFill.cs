@@ -14,9 +14,9 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
         {
             XElement nodeLegalEntity = new XElement(NamespaceProvider.Cac + "ShareholderParty");
             XElement nodePartyScheme = null;
-
-            if (!String.IsNullOrEmpty(LegalEntity.SupplierPartyPartecipationPercent.Trim()))
-                nodeLegalEntity.Add(new XElement(NamespaceProvider.Cbc + "PartecipationPercent", LegalEntity.SupplierPartyPartecipationPercent));
+            if (LegalEntity.SupplierPartyPartecipationPercent != null)
+                if (!String.IsNullOrEmpty(LegalEntity.SupplierPartyPartecipationPercent.Trim()))
+                    nodeLegalEntity.Add(new XElement(NamespaceProvider.Cbc + "PartecipationPercent", LegalEntity.SupplierPartyPartecipationPercent));
 
             XElement nodeLegalEntityPartyParty = new XElement(NamespaceProvider.Cac + "Party");
 

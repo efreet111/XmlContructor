@@ -13,15 +13,25 @@ namespace XmlBuildDLL
 {
     public class XmlBuilder
     {
+        /// <summary>Construye documento XML UBL.</summary>
         public BuildXmlResponse XmlDocument(OrquestatorXmlClass data)
         {
             BuildXmlResponse response = new BuildXmlResponse();
 
-            BuilderXmlDominio buildDoc = new BuilderXmlDominio();
+            try
+            {
+                BuilderXmlDominio buildDoc = new BuilderXmlDominio();
 
-            data = HelperObjConverter<OrquestatorXmlClass>.FromJson(HelperObjConverter<OrquestatorXmlClass>.ToJson(data));
+                data = HelperObjConverter<OrquestatorXmlClass>.FromJson(HelperObjConverter<OrquestatorXmlClass>.ToJson(data));
 
-            response.xml = buildDoc.BuildXML(data);
+                response.xml = buildDoc.BuildXML(data);
+                response.Codigo = 0; // Éxito
+            }
+            catch (Exception ex)
+            {
+                response.Codigo = -1;
+                response.Mensaje = $"Error al construir XML: {ex.Message}";
+            }
 
             return response;
         }

@@ -9,7 +9,7 @@ using static XmlBuildDLL.BaseClass.ComonXmlComponent.Catalogos;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
-    internal static class PartyBuilder
+    public static class PartyBuilder
     {
         public static XElement BuildSupplierParty(OrquestatorXmlClass doc)
         {
@@ -19,7 +19,11 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 
             XElement SupplierParty = new XElement(fe + "AccountingSupplierParty");
 
-            XElement SAdditionalAccountID = new XElement(cbc + "AdditionalAccountID", doc.AccountingSupplierParty.AdditionalAccountID);
+            // Format AdditionalAccountID with SUPP prefix and zero padding
+            string supplierAccountId = doc.AccountingSupplierParty?.AdditionalAccountID > 0
+                ? $"SUPP{doc.AccountingSupplierParty.AdditionalAccountID:000}"
+                : string.Empty;
+            XElement SAdditionalAccountID = new XElement(cbc + "AdditionalAccountID", supplierAccountId);
             SupplierParty.Add(SAdditionalAccountID);
 
             XElement SParty = new XElement(fe + "Party");
@@ -106,7 +110,11 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 
             XElement CustomerParty = new XElement(fe + "AccountingCustomerParty");
 
-            XElement CAdditionalAccountID = new XElement(cbc + "AdditionalAccountID", doc.AccountingCustomerParty.AdditionalAccountID);
+            // Format AdditionalAccountID with CUST prefix and zero padding
+            string customerAccountId = doc.AccountingCustomerParty?.AdditionalAccountID > 0
+                ? $"CUST{doc.AccountingCustomerParty.AdditionalAccountID:000}"
+                : string.Empty;
+            XElement CAdditionalAccountID = new XElement(cbc + "AdditionalAccountID", customerAccountId);
             CustomerParty.Add(CAdditionalAccountID);
 
             XElement CParty = new XElement(fe + "Party");

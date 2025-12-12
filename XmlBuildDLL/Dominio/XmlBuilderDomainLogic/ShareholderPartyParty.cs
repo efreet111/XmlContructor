@@ -24,7 +24,7 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
             //nodeLegalEntity1.Add(node1);
 
 
-            if (!String.IsNullOrEmpty(LegalEntity.CompanyID.Trim()))
+            if (!string.IsNullOrWhiteSpace(LegalEntity?.CompanyID))
             {
                 XElement nodeCompany = new XElement(NamespaceProvider.Cbc + "CompanyID", LegalEntity.SupplierPartyCompanyID,
                     new XAttribute("schemeID", LegalEntity.SupplierPartyCompanyschemeID),
@@ -34,18 +34,18 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
                 nodeLegalEntity1.Add(nodeCompany);
             }
 
-            if (!String.IsNullOrEmpty(LegalEntity.SupplierPartyTaxLevelCode.Trim()))
+            if (!string.IsNullOrWhiteSpace(LegalEntity?.SupplierPartyTaxLevelCode))
             {
                 XElement nodeLevelCode = new XElement(NamespaceProvider.Cbc + "TaxLevelCode", LegalEntity.SupplierPartyTaxLevelCode, new XAttribute("listName", LegalEntity.SupplierPartyTaxLevelCode));
                 nodeLegalEntity1.Add(nodeLevelCode);
             }
 
             XElement nodeScheme = new XElement(NamespaceProvider.Cac + "TaxScheme");
-            if (!String.IsNullOrEmpty(LegalEntity.SupplierPartyTaxSchemeID))
+            if (!String.IsNullOrEmpty(LegalEntity?.SupplierPartyTaxSchemeID))
             {
                 nodeScheme.Add(new XElement(NamespaceProvider.Cbc + "ID", LegalEntity.SupplierPartyTaxSchemeID));
             }
-            if (!String.IsNullOrEmpty(LegalEntity.SupplierPartyTaxSchemeName))
+            if (!String.IsNullOrEmpty(LegalEntity?.SupplierPartyTaxSchemeName))
             {
                 nodeScheme.Add(new XElement(NamespaceProvider.Cbc + "Name", LegalEntity.SupplierPartyTaxSchemeName));
             }

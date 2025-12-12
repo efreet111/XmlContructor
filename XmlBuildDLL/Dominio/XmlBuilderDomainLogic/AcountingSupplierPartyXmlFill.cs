@@ -54,7 +54,7 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
                 if (obj.TaxScheme != null)
                 {
 
-                    party.Add(PartyTaxSchemeXmlFill.FillPartyTaxScheme("cac", obj.TaxScheme));
+                    party.Add(PartyTaxSchemeXmlFill.FillPartyTaxScheme( obj.TaxScheme));
 
 
                 }
@@ -63,7 +63,7 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
                 if (obj.LegalEntity != null)
                 {
 
-                    XElement legalEntity = LegalEntityXmlFill.FillLegalEntity("cac", obj.LegalEntity);
+                    XElement legalEntity = LegalEntityXmlFill.FillLegalEntity( obj.LegalEntity);
                     if (legalEntity.HasElements)
                     {
                         if (obj.shareHolder != null)

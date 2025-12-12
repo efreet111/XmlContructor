@@ -49,6 +49,8 @@ namespace XmlBuildDLL.Dominio
             _postProcessor = postProcessor;
         }
 
+
+        /// <summary>Construye el XML del documento UBL.</summary>
         public string BuildXML(OrquestatorXmlClass i)
         {
             OrquestatorObj = i;

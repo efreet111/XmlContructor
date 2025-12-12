@@ -10,30 +10,31 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
     internal class PartyTaxSchemeXmlFill
     {
-        internal static XElement FillPartyTaxScheme(XNamespace ns, PartyTaxScheme obj)
+        internal static XElement FillPartyTaxScheme( PartyTaxScheme obj)
         {
-            XElement NodoTaxScheme = new XElement(ns + "PartyTaxScheme");
-            if (!String.IsNullOrEmpty(obj.RegistrationName.Trim()))
+            XElement NodoTaxScheme = new XElement(NamespaceProvider.Cac + "PartyTaxScheme");
+            // Use null-safe checks before Trim to avoid NullReferenceException
+            if (!string.IsNullOrWhiteSpace(obj?.RegistrationName))
             {
-                NodoTaxScheme.Add(new XElement("cbc" + "RegistrationName", obj.RegistrationName));
+                NodoTaxScheme.Add(new XElement("cbc" + "RegistrationName", obj.RegistrationName.Trim()));
             }
-            if (!String.IsNullOrEmpty(obj.CompanyID.Trim()))
+            if (!string.IsNullOrWhiteSpace(obj?.CompanyID))
             {
-                XElement nodeCompany = new XElement("cbc" + "CompanyID", obj.CompanyID,
-                    new XAttribute("schemeID", obj.SchemeID),
-                    new XAttribute("schemeName", obj.SchemeName),
-                    new XAttribute("schemeAgencyName", obj.SchemeAgencyName),
-                    new XAttribute("schemeAgencyID", obj.SchemeAgencyID));
+                XElement nodeCompany = new XElement("cbc" + "CompanyID", obj.CompanyID.Trim(),
+                    new XAttribute("schemeID", obj.SchemeID ?? string.Empty),
+                    new XAttribute("schemeName", obj.SchemeName ?? string.Empty),
+                    new XAttribute("schemeAgencyName", obj.SchemeAgencyName ?? string.Empty),
+                    new XAttribute("schemeAgencyID", obj.SchemeAgencyID ?? string.Empty));
                 NodoTaxScheme.Add(nodeCompany);
             }
 
-            if (!String.IsNullOrEmpty(obj.TaxLevelCode.Trim()))
+            if (!string.IsNullOrWhiteSpace(obj?.TaxLevelCode))
             {
-                XElement nodeLevelCode = new XElement("cbc" + "TaxLevelCode", obj.TaxLevelCode, new XAttribute("listName", obj.TaxLevelCodeListName));
+                XElement nodeLevelCode = new XElement("cbc" + "TaxLevelCode", obj.TaxLevelCode.Trim(), new XAttribute("listName", obj.TaxLevelCodeListName ?? string.Empty));
                 NodoTaxScheme.Add(nodeLevelCode);
             }
 
-            if (obj.RegistrationAddress != null)
+            if (obj?.RegistrationAddress != null)
             {
                 XElement address = AddressXmlFill.FillAddress(obj.RegistrationAddress, "RegistrationAddress");
                 if (address.HasElements)
@@ -41,13 +42,13 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
             }
 
             XElement nodeScheme = new XElement("cac" + "TaxScheme");
-            if (!String.IsNullOrEmpty(obj.TaxSchemeID))
+            if (!string.IsNullOrWhiteSpace(obj?.TaxSchemeID))
             {
-                nodeScheme.Add(new XElement("cbc" + "ID", obj.TaxSchemeID));
+                nodeScheme.Add(new XElement("cbc" + "ID", obj.TaxSchemeID.Trim()));
             }
-            if (!String.IsNullOrEmpty(obj.TaxSchemeName))
+            if (!string.IsNullOrWhiteSpace(obj?.TaxSchemeName))
             {
-                nodeScheme.Add(new XElement("cbc" + "Name", obj.TaxSchemeName));
+                nodeScheme.Add(new XElement("cbc" + "Name", obj.TaxSchemeName.Trim()));
             }
             if (nodeScheme.HasElements)
             {

@@ -1,61 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using XmlBuildDLL.BaseClass.ComonXmlComponent;
+using XmlBuildDLL.BaseClass.Modelresponse;
+using XmlBuildDLL.BaseClass.Modelresponse.UBL2._1;
+using System.Globalization;
 
 namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
     internal static class TaxTotalXmlfill
     {
-        internal static XElement TaxTotal(TaxTotal TaxTotal)
+        internal static XElement FillTaxTotal(TaxTotal objTaxTotal, ref int cantidadDecimales, string valorPorDefectoRedondeoAplicado)
         {
-            var fe = NamespaceProvider.Fe;
-            var cac = NamespaceProvider.Cac;
-            var cbc = NamespaceProvider.Cbc;
+            XElement taxTotal = null;
 
-            XElement GTaxTotal = new XElement(fe + "TaxTotal");
-
-            GTaxTotal.Add(new XElement(cbc + "TaxAmount", TaxTotal.TaxAmount.ToString("0.0000"),
-                new XAttribute("currencyID", TaxTotal.TaxAmount_currencyID)
-                ));
-
-            GTaxTotal.Add(new XElement(cbc + "TaxEvidenceIndicator", TaxTotal.TaxEvidenceIndicator.ToLower()));
-
-            if (TaxTotal.TaxSubtotal != null)
+            if (objTaxTotal != null)
             {
-                if (TaxTotal.TaxSubtotal.Count > 0)
+                taxTotal = new XElement(NamespaceProvider.Cac + "TaxTotal");
+
+                TaxTotal row = objTaxTotal;
+
+                if (!String.IsNullOrEmpty(row.TaxAmount.ToString()) && !String.IsNullOrEmpty(row.TaxAmount_currencyID))
+                    taxTotal.Add(new XElement(NamespaceProvider.Cbc + "TaxAmount",
+                        row.TaxAmount.ToString(string.Format(CultureInfo.InvariantCulture, "F{0}", cantidadDecimales), CultureInfo.InvariantCulture),
+                        new XAttribute("currencyID", row.TaxAmount_currencyID)
+                    ));
+
+                if (String.IsNullOrEmpty(row.RoundingAmount) && !String.IsNullOrEmpty(valorPorDefectoRedondeoAplicado))
                 {
-                    foreach (var GSubtotal in TaxTotal.TaxSubtotal)
-                    {
-                        XElement taxSubtotal = new XElement(fe + "TaxSubtotal");
+                    row.RoundingAmount = valorPorDefectoRedondeoAplicado;
+                }
 
-                        taxSubtotal.Add(new XElement(cbc + "TaxableAmount", GSubtotal.TaxableAmount.ToString("0.0000"),
-                            new XAttribute("currencyID", GSubtotal.TaxableAmount_currencyID)
-                            ));
+                if (!String.IsNullOrEmpty(row.RoundingAmount))
+                {
+                    // Parse con cultura invariante para evitar problemas con separadores decimales según configuración regional
+                    var roundingDecimal = decimal.Parse(row.RoundingAmount, CultureInfo.InvariantCulture);
+                    row.RoundingAmount = roundingDecimal.ToString(string.Format(CultureInfo.InvariantCulture, "F{0}", cantidadDecimales), CultureInfo.InvariantCulture);
+                    taxTotal.Add(new XElement(NamespaceProvider.Cbc + "RoundingAmount", row.RoundingAmount, new XAttribute("currencyID", row.TaxAmount_currencyID)));
+                }
 
-                        taxSubtotal.Add(new XElement(cbc + "TaxAmount", GSubtotal.TaxAmount.ToString("0.0000"),
-                            new XAttribute("currencyID", GSubtotal.TaxAmount_currencyID)
-                            ));
+                if (!String.IsNullOrEmpty(row.TaxEvidenceIndicator))
+                    taxTotal.Add(new XElement(NamespaceProvider.Cbc + "TaxEvidenceIndicator", (row.TaxEvidenceIndicator == "true" ? "true" : "false")));
 
-                        taxSubtotal.Add(new XElement(cbc + "Percent", GSubtotal.Percent.ToString("0.0000")));
-
-                        taxSubtotal.Add(new XElement(cac + "TaxCategory",
-                            new XElement(cac + "TaxScheme",
-                                new XElement(cbc + "ID", GSubtotal.TaxScheme_ID)
-                            )
-                        ));
-
-                        GTaxTotal.Add(taxSubtotal);
-                    }
-
+                //TaxSubTotals
+                if (row.TaxSubtotal != null)
+                {
+                    taxTotal = TaxSubTotalXmlFill.FillTaxSubtotal(row.TaxSubtotal, taxTotal, ref cantidadDecimales);
                 }
             }
-
-            return GTaxTotal;
+            return taxTotal;
         }
-
     }
 }

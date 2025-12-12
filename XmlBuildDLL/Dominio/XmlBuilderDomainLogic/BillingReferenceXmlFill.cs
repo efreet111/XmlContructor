@@ -27,15 +27,29 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
             {
                 if (TypeDocument == "Invoice")
                 {
-
+                    // Siempre agregar la referencia de documento de factura primero
                     xElement = new XElement(NamespaceProvider.Cac + "InvoiceDocumentReference");
-                    //xElement = new XElement(cac + "InvoiceDocumentReference");
+                    if (!string.IsNullOrEmpty(row.InvoiceID))
+                    {
+                        xElement.Add(new XElement(NamespaceProvider.Cbc + "ID", row.InvoiceID));
+                    }
+                    if (!string.IsNullOrEmpty(row.InvoiceUUID))
+                    {
+                        xElement.Add(new XElement(NamespaceProvider.Cbc + "UUID", row.InvoiceUUID,
+                                new XAttribute("schemeName", row.InvoiceschemeName)));
+                    }
+                    if (row.InvoiceIssueDate.HasValue)
+                    {
+                        xElement.Add(new XElement(NamespaceProvider.Cbc + "IssueDate", row.InvoiceIssueDate.Value.ToString("yyyy-MM-dd")));
+                    }
+                    if (xElement.HasElements)
+                    {
+                        xElementBillingReference.Add(xElement);
+                    }
 
-
-
+                    // A partir de aquí, lógica adicional existente para otras referencias
                     if (TypeDocument == HelpersConstantes.TipoDocumento.Fact)
                     {
-
                         if (row.Tipo_Documento_Referenciado == "91")
                         {
                             if (!string.IsNullOrEmpty(row.InvoiceID))
@@ -80,9 +94,8 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
                             if (xElement.HasElements)
                                 xElementBillingReference.Add(xElement);
                         }
-
-
                     }
+
                     if (TypeDocument == HelpersConstantes.TipoDocumento.FactDocumentoSoporte)
                     {
                         xElement = new XElement(NamespaceProvider.Cac + "CreditNoteDocumentReference");
@@ -145,8 +158,6 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
                         if (xElement.HasElements)
                             xElementBillingReference.Add(xElement);
                     }
-
-
 
                     if (xElementReferenceLine != null)
                     {

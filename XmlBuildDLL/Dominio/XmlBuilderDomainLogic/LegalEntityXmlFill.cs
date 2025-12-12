@@ -10,9 +10,9 @@ namespace XmlBuildDLL.Dominio.XmlBuilderDomainLogic
 {
     internal class LegalEntityXmlFill
     {
-        internal static XElement FillLegalEntity(XNamespace ns, PartyLegalEntity obj)
+        internal static XElement FillLegalEntity( PartyLegalEntity obj)
         {
-            XElement NodoLegalEntity = new XElement(ns + "PartyLegalEntity");
+            XElement NodoLegalEntity = new XElement(NamespaceProvider.Cac + "PartyLegalEntity");
 
             if (!String.IsNullOrEmpty(obj.RegistrationName))
             {

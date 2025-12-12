@@ -36,8 +36,6 @@ namespace XmlBuildDLL.BaseClass.Modelresponse
 
         public Contact Contact { get; set; }
 
-        public FinancialAccount FinancialAccount { get; set; }
-
         public DocumentReference IdentityDocumentReference { get; set; }
 
         public Address ResidenceAddress { get; set; }

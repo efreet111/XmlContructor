@@ -33,7 +33,7 @@ namespace XmlBuildDLL.BaseClass.Modelresponse
         
         ///de:Invoice/de:InvoiceLine/cbc:LineExtensionAmount/@currencyID
         
-        public String LineExtensionAmount_currencyID { get; set; }
+        public String LineExtensionAmountCurrencyID { get; set; }
 
         
         ///de:Invoice/de:InvoiceLine/cbc:FreeOfChargeIndicator

@@ -12,7 +12,7 @@ namespace XmlBuildDLL.Tests.XmlBuilderDomainLogic
         public void FillPartyTaxScheme_ReturnsXElement()
         {
             var obj = new PartyTaxScheme();
-            var result = PartyTaxSchemeXmlFill.FillPartyTaxScheme("ns", obj);
+            var result = PartyTaxSchemeXmlFill.FillPartyTaxScheme( obj);
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(XElement));
         }

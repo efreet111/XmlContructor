@@ -2,8 +2,13 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using XmlBuildDLL;
 using XmlBuildDLL.BaseClass.Modelresponse;
+using XmlBuildDLL.BaseClass.Modelresponse.UBL2._1; // for TaxSubtotal
 using XmlBuildDLL.DocumentClass.UBL2._1;
 using XmlBuildDLL.Transversal;
+using System.Xml.Linq;
+using XmlBuildDLL.Dominio.XmlBuilderDomainLogic; // NamespaceProvider
+using System.Linq;
+using System.Text; // for Base64 decoding
 
 namespace XmlBuildDLL.Tests
 {
@@ -61,7 +66,7 @@ namespace XmlBuildDLL.Tests
                 AcountingSupplierParty = new AcountingSupplierParty
                 {
                     AdditionalAccountID = 1,
-                    PartyName = "The Factory HKA Colombia",
+                    PartyName = "ON Plus",
                     LegalEntity = new PartyLegalEntity
                     {
                         CompanySchemeAgencyID = "195",
@@ -70,9 +75,9 @@ namespace XmlBuildDLL.Tests
                         CompanySchemeID = "6",
                         CompanySchemeName = "31",
                         CorporateRegistrationID = "SETP",
-                        CorporateRegistrationName = "The Factory HKA Colombia",
+                        CorporateRegistrationName = "ON Plus",
                         CorporateRegistrationTypeCode = "000001",
-                        RegistrationName = "The Factory HKA Colombia"
+                        RegistrationName = "ON Plus"
                     }
                 },
                 AccountingCustomerParty = new AccountingCustomerParty
@@ -103,9 +108,69 @@ namespace XmlBuildDLL.Tests
                         PriceAmount_currencyID = "COP",
                         DescripcionItem = "Producto o Servicio 1",
                         LineExtensionAmount = 1000m,
-                        LineExtensionAmount_currencyID = "COP",
+                        LineExtensionAmountCurrencyID = "COP",
                         Quantity = 1m,
-                        Quantity_unitCode = "KGM"
+                        Quantity_unitCode = "KGM",
+                        FreeOfChargeIndicator = false,
+                        AlternativeConditionPrice = new List<AlternativeConditionPrice>
+                        {
+                            new AlternativeConditionPrice
+                            {
+                                PriceAmount = 950m,
+                                PriceAmount_currencyID = "COP",
+                                PriceTypeCode = "01"
+                            }
+                        },
+                        AllowanceCharge = new List<AllowanceCharge>
+                        {
+                            new AllowanceCharge
+                            {
+                                ID = 1,
+                                ChargeIndicator = false,
+                                Amount = 50m,
+                                Amount_CurrencyID = "COP"
+                            }
+                        },
+                        WithholdingTaxTotal = new List<WithholdingTaxTotal>
+                        {
+                            new WithholdingTaxTotal
+                            {
+                                TaxAmount = 10m,
+                                TaxAmount_currencyID = "COP",
+                                TaxSubtotal = new List<TaxSubtotal>
+                                {
+                                    new TaxSubtotal
+                                    {
+                                        TaxableAmount = 100m,
+                                        TaxableAmount_currencyID = "COP",
+                                        TaxAmount = 10m,
+                                        TaxAmount_currencyID = "COP",
+                                        Percent = 10m,
+                                        TaxScheme_ID = "06",
+                                        TaxScheme_Name = "ReteFuente"
+                                    }
+                                }
+                            }
+                        },
+                        InvoicePeriod = new List<InvoicePeriod>
+                        {
+                            new InvoicePeriod
+                            {
+                                StartDate = System.DateTime.Parse("2024-01-01"),
+                                EndDate = System.DateTime.Parse("2024-01-31")
+                            }
+                        }
+                    },
+                    new InvoiceLine
+                    {
+                        ID = 2,
+                        Quantity = 2m,
+                        Quantity_unitCode = "EA",
+                        PriceAmount = 500m,
+                        PriceAmount_currencyID = "COP",
+                        LineExtensionAmount = 1000m,
+                        LineExtensionAmountCurrencyID = "COP",
+                        FreeOfChargeIndicator = true
                     }
                 },
                 TaxTotal = new List<TaxTotal>
@@ -131,13 +196,13 @@ namespace XmlBuildDLL.Tests
                 },
                 LegalMonetaryTotal = new LegalMonetaryTotal
                 {
-                    LineExtensionAmount = 1000m,
+                    LineExtensionAmount = 2000m,
                     LineExtensionAmount_currencyID = "COP",
-                    TaxExclusiveAmount = 1000m,
+                    TaxExclusiveAmount = 2000m,
                     TaxExclusiveAmount_currencyID = "COP",
-                    TaxInclusiveAmount = 1190m,
+                    TaxInclusiveAmount = 2190m,
                     TaxInclusiveAmount_currencyID = "COP",
-                    PayableAmount = 1190m,
+                    PayableAmount = 2180m,
                     PayableAmount_currencyID = "COP"
                 }
             };
@@ -161,6 +226,77 @@ namespace XmlBuildDLL.Tests
             Assert.IsNotNull(result.XmlFile);
         }
 
+
+        [TestMethod]
+        public void Build_FullInvoice_ContainsExpectedLineNodes()
+        {
+            var builder = new UblDocumentBuilder();
+            int dec = 2;
+            var nombres = new List<string>();
+            var data = GetFilledBillingDocument(HelpersConstantes.TipoDocumento.FactExportacion);
+
+            var result = builder.Build(data, ref dec, nombres);
+            Assert.IsNotNull(result.XmlFile);
+
+            // decode base64 to XML string
+            var xmlString = Encoding.UTF8.GetString(System.Convert.FromBase64String(result.XmlFile));
+
+            // parse XML
+            var xdoc = XDocument.Parse(xmlString);
+            var nsCac = NamespaceProvider.Cac;
+            var nsCbc = NamespaceProvider.Cbc;
+
+            var lines = xdoc.Root?.Elements(nsCac + "InvoiceLine").ToList();
+            Assert.IsNotNull(lines);
+
+            // Check first line FreeOfChargeIndicator false and PricingReference present
+            var first = lines.FirstOrDefault();
+            Assert.IsNotNull(first);
+            Assert.AreEqual("false", first.Element(nsCbc + "FreeOfChargeIndicator")?.Value);
+            var pricingRef = first.Element(nsCac + "PricingReference");
+            Assert.IsNotNull(pricingRef);
+            Assert.IsTrue(pricingRef.HasElements);
+
+            // Check WithholdingTaxTotal exists
+            var wht = first.Element(nsCac + "WithholdingTaxTotal");
+            Assert.IsNotNull(wht);
+            Assert.IsNotNull(wht.Element(nsCbc + "TaxAmount"));
+
+            // Second line free of charge true
+            var secondLine = lines.Skip(1).FirstOrDefault();
+            Assert.IsNotNull(secondLine);
+            Assert.AreEqual("true", secondLine.Element(nsCbc + "FreeOfChargeIndicator")?.Value);
+        }
+
+        [TestMethod]
+        public void Build_FinalXml_ContainsLegalMonetaryTotal()
+        {
+            var builder = new UblDocumentBuilder();
+            int dec = 2;
+            var nombres = new List<string>();
+            var data = GetFilledBillingDocument(HelpersConstantes.TipoDocumento.Fact);
+
+            var result = builder.Build(data, ref dec, nombres);
+            Assert.IsNotNull(result.XmlFile);
+
+            // decode base64 to XML string
+            var xmlString = Encoding.UTF8.GetString(System.Convert.FromBase64String(result.XmlFile));
+
+            var xdoc = XDocument.Parse(xmlString);
+            var nsCac = NamespaceProvider.Cac;
+            var nsCbc = NamespaceProvider.Cbc;
+
+            var legal = xdoc.Root?.Element(nsCac + "LegalMonetaryTotal");
+            Assert.IsNotNull(legal);
+            Assert.AreEqual(2000m.ToString("F2"), legal.Element(nsCbc + "LineExtensionAmount")?.Value);
+            Assert.AreEqual("COP", legal.Element(nsCbc + "LineExtensionAmount")?.Attribute("currencyID")?.Value);
+            Assert.AreEqual(2000m.ToString("F2"), legal.Element(nsCbc + "TaxExclusiveAmount")?.Value);
+            Assert.AreEqual("COP", legal.Element(nsCbc + "TaxExclusiveAmount")?.Attribute("currencyID")?.Value);
+            Assert.AreEqual(2190m.ToString("F2"), legal.Element(nsCbc + "TaxInclusiveAmount")?.Value);
+            Assert.AreEqual("COP", legal.Element(nsCbc + "TaxInclusiveAmount")?.Attribute("currencyID")?.Value);
+            Assert.AreEqual(2180m.ToString("F2"), legal.Element(nsCbc + "PayableAmount")?.Value);
+            Assert.AreEqual("COP", legal.Element(nsCbc + "PayableAmount")?.Attribute("currencyID")?.Value);
+        }
 
         [TestMethod]
         public void Build_FactContingenciaEmisorType_ReturnsBuildXmlResponse()

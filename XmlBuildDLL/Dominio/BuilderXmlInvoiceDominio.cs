@@ -43,6 +43,8 @@ namespace XmlBuildDLL.Dominio
             _namespaceProvider = namespaceProvider ?? new DefaultNamespaceProvider();
         }
 
+
+        /// <summary>Construye el XML de factura UBL 2.1.</summary>
         public virtual String BuildXML(BillingDocument21Object BillingObj, ref int cantidadDecimales, List<string> nombres)
         {
             // Inicializar namespaces desde el proveedor
@@ -182,208 +184,122 @@ namespace XmlBuildDLL.Dominio
                 documentXML.Add(nodeSupplierParty);
             }
 
-            //XElement nodeCustomerParty = FillAccountingCustomerParty(cac, BillingObj);
-            //if (nodeCustomerParty != null && nodeCustomerParty.HasElements)
-            //{
-            //    documentXML.Add(nodeCustomerParty);
-            //}
+            XElement nodeCustomerParty = AccountingCustomerPartyXmlFill.FillAccountingCustomerParty(BillingObj.AccountingCustomerParty);
+            if (nodeCustomerParty != null && nodeCustomerParty.HasElements)
+            {
+                documentXML.Add(nodeCustomerParty);
+            }
 
-            //XElement nodeBuyersCustomerParty = FillBuyerCustomerParty(cac, BillingObj);
-            //if (nodeBuyersCustomerParty != null && nodeBuyersCustomerParty.HasElements)
-            //{
-            //    documentXML.Add(nodeBuyersCustomerParty);
-            //}
+            XElement nodeBuyersCustomerParty = BuyerCustomerPartyXmlFill.FillBuyerCustomerParty( BillingObj.BuyersCustomerParty);
+            if (nodeBuyersCustomerParty != null && nodeBuyersCustomerParty.HasElements)
+            {
+                documentXML.Add(nodeBuyersCustomerParty);
+            }
 
-            //XElement nodeTaxRepParty = FillTaxRepresentativeParty(BillingObj.TaxRepresentativeParty);
-            //if (nodeTaxRepParty != null && nodeTaxRepParty.HasElements)
-            //{
-            //    documentXML.Add(nodeTaxRepParty);
-            //}
+            XElement nodeTaxRepParty = TaxRepresentativePartyXmlFill.FillTaxRepresentativeParty(BillingObj.TaxRepresentativeParty);
+            if (nodeTaxRepParty != null && nodeTaxRepParty.HasElements)
+            {
+                documentXML.Add(nodeTaxRepParty);
+            }
 
-            //XElement nodeDelivery = FillDelivery(cac, BillingObj.Delivery);
-            //if (nodeDelivery != null && nodeDelivery.HasElements)
-            //{
-            //    documentXML.Add(nodeDelivery);
-            //}
+            XElement nodeDelivery = DeliveryXmlFill.FillDelivery(BillingObj.Delivery);
+            if (nodeDelivery != null && nodeDelivery.HasElements)
+            {
+                documentXML.Add(nodeDelivery);
+            }
 
-            //if (BillingObj.DeliveryTerms != null)
-            //{
-            //    XElement nodeAllowanceDelivery = null;
-            //    XElement nodeLocation = null;
-            //    if (BillingObj.DeliveryTerms.AllowanceCharge != null)
-            //    {
-            //        nodeAllowanceDelivery = FillAllowanceCharge(cac, BillingObj.DeliveryTerms.AllowanceCharge, ref cantidadDecimales);
-            //    }
+            if (BillingObj.DeliveryTerms != null)
+            {
+                XElement nodeAllowanceDelivery = null;
+                XElement nodeLocation = null;
+                if (BillingObj.DeliveryTerms.AllowanceCharge != null)
+                {
+                    nodeAllowanceDelivery = AllowanceChargeXmlFill.FillAllowanceCharge(BillingObj.DeliveryTerms.AllowanceCharge, ref cantidadDecimales);
+                }
 
-            //    if (BillingObj.DeliveryTerms.DeliveryLocation != null)
-            //    {
-            //        XElement address = FillAddress(BillingObj.DeliveryTerms.DeliveryLocation, "Address");
-            //        if (address != null && address.HasElements)
-            //        {
-            //            nodeLocation = new XElement(cac + "DeliveryLocation", address);
-            //        }
-            //    }
+                if (BillingObj.DeliveryTerms.DeliveryLocation != null)
+                {
+                    XElement address = AddressXmlFill.FillAddress(BillingObj.DeliveryTerms.DeliveryLocation, "Address");
+                    if (address != null && address.HasElements)
+                    {
+                        nodeLocation = new XElement(cac + "DeliveryLocation", address);
+                    }
+                }
 
-            //    XElement nodedeliveryTerms = FillDeliveryTerms(nodeLocation, nodeAllowanceDelivery, BillingObj);
-            //    if (nodedeliveryTerms != null && nodedeliveryTerms.HasElements)
-            //    {
-            //        documentXML.Add(nodedeliveryTerms);
-            //    }
-            //}
+            }
 
-            //if (BillingObj.PaymentMeans != null)
-            //{
-            //    foreach (PaymentMeans rowP in BillingObj.PaymentMeans)
-            //    {
-            //        XElement nodePaymentMeans = FillPaymentMeans(rowP);
-            //        if (nodePaymentMeans != null && nodePaymentMeans.HasElements)
-            //        {
-            //            documentXML.Add(nodePaymentMeans);
-            //        }
-            //    }
-            //}
+            if (BillingObj.PaymentMeans != null)
+            {
+                foreach (PaymentMeans rowP in BillingObj.PaymentMeans)
+                {
+                    XElement nodePaymentMeans = PaymentMeansXmlFill.FillPaymentMeans(rowP);
+                    if (nodePaymentMeans != null && nodePaymentMeans.HasElements)
+                    {
+                        documentXML.Add(nodePaymentMeans);
+                    }
+                }
+            }
 
-            //XElement nodePaymentTerms = FillPaymentTerms(cac, BillingObj.PaymentTerms);
-            //if (nodePaymentTerms != null && nodePaymentTerms.HasElements)
-            //{
-            //    documentXML.Add(nodePaymentTerms);
-            //}
-
-            //#region SectorSalud
-            //if (BillingObj.EsEscenarioSectorSalud("2"))
-            //{
-            //    for (int i = 0; i < BillingObj.PrepaidPayment.Count(); i++)
-            //    {
-            //        int counter = i + 1;
-
-            //        // Verificar si hay un valor en la lista 'nombres' antes de intentar acceder a él
-            //        if (nombres.Count > i)
-            //        {
-            //            string nombre = nombres[i];
-
-            //            XElement OutPrepaidPay = FillPrepaidPaymentNodesSector2(ref cantidadDecimales, BillingObj.PrepaidPayment[i], nombre, counter);
-
-            //            if (OutPrepaidPay != null && OutPrepaidPay.HasElements)
-            //            {
-            //                documentXML.Add(OutPrepaidPay);
-            //            }
-            //        }
-            //        else
-            //        {
-            //            // Manejar el caso en el que no hay un valor correspondiente en la lista 'nombres'
-            //            XElement OutPrepaidPay = FillPrepaidPaymentNodes(ref cantidadDecimales, BillingObj.PrepaidPayment[i], counter);
-            //            if (OutPrepaidPay != null && OutPrepaidPay.HasElements)
-            //            {
-            //                documentXML.Add(OutPrepaidPay);
-            //            }
-            //        }
-            //    }
-            //}
-
-            //else
-
-            //    for (int i = 0; i < BillingObj.PrepaidPayment.Count(); i++)
-            //    {
-            //        int counter = i + 1;
-            //        //documentXml.Add(nodePrepaidPayment);
-            //        XElement OutPrepaidPay = FillPrepaidPaymentNodes(ref cantidadDecimales, BillingObj.PrepaidPayment[i], counter);
-            //        if (OutPrepaidPay != null && OutPrepaidPay.HasElements)
-            //        {
-            //            documentXML.Add(OutPrepaidPay);
-            //        }
-            //    }
+            XElement nodePaymentTerms = PaymenttermsXmlFill.FillPaymentTerms( BillingObj.PaymentTerms);
+            if (nodePaymentTerms != null && nodePaymentTerms.HasElements)
+            {
+                documentXML.Add(nodePaymentTerms);
+            }
 
 
-            //#endregion
+            if (BillingObj.AllowanceCharge != null)
+            {
+                foreach (AllowanceCharge allowance in BillingObj.AllowanceCharge)
+                {
+                    XElement nodeAlowance = AllowanceChargeXmlFill.FillAllowanceCharge( allowance, ref cantidadDecimales);
+                    if (nodeAlowance != null && nodeAlowance.HasElements)
+                    {
+                        documentXML.Add(nodeAlowance);
+                    }
+                }
+            }
 
 
-            //if (BillingObj.AllowanceCharge != null)
-            //{
-            //    foreach (AllowanceCharge allowance in BillingObj.AllowanceCharge)
-            //    {
-            //        XElement nodeAlowance = FillAllowanceCharge(cac, allowance, ref cantidadDecimales);
-            //        if (nodeAlowance != null && nodeAlowance.HasElements)
-            //        {
-            //            documentXML.Add(nodeAlowance);
-            //        }
-            //    }
-            //}
+            if (BillingObj.TaxTotal != null)
+            {
+                foreach (TaxTotal tax in BillingObj.TaxTotal)
+                {
+                    XElement nodeTaxTotal = TaxTotalXmlfill.FillTaxTotal( tax, ref cantidadDecimales, BillingObj.ValorPorDefectoRedondeoAplicado);
+                    if (nodeTaxTotal != null && nodeTaxTotal.HasElements)
+                    {
+                        documentXML.Add(nodeTaxTotal);
+                    }
+                }
+            }
 
+            if (BillingObj.WithholdingTaxTotal != null)
+            {
+                foreach (WithholdingTaxTotal taxR in BillingObj.WithholdingTaxTotal)
+                {
+                    XElement nodeWithholdingTaxTotal = WithholdingTaxTotalXmlFill.FillWithholdingTaxTotal( taxR, ref cantidadDecimales);
+                    if (nodeWithholdingTaxTotal != null && nodeWithholdingTaxTotal.HasElements)
+                    {
+                        documentXML.Add(nodeWithholdingTaxTotal);
+                    }
+                }
+            }
 
+            XElement nodelegalMonetary = InvoiceLegalMonetaryTotalXmlFill.FillInvoiceLegalMonetaryTotal("LegalMonetaryTotal", ref cantidadDecimales, BillingObj);
+            if (nodelegalMonetary != null && nodelegalMonetary.HasElements)
+            {
+                documentXML.Add(nodelegalMonetary);
+            }
 
-            //XElement nodePaymentExchangeRate = FillPaymentExchangeRate(cac, BillingObj.PaymentExchangeRate, ref cantidadDecimales);
-            //if (nodePaymentExchangeRate != null && nodePaymentExchangeRate.HasElements)
-            //{
-            //    documentXML.Add(nodePaymentExchangeRate);
-            //}
+            // Reemplaza la llamada estática por una instancia de InvoiceLineXmlFill
+            var invoiceLineXmlFill = new InvoiceLineXmlFill();
+            invoiceLineXmlFill.FillInvoiceLine(ref documentXML, "InvoiceLine", "Invoiced", ref cantidadDecimales, BillingObj);
 
-            //XElement nodePaymentAlternativeExchangeRate = FillPaymentAlternativeExchangeRate(cac, BillingObj.PaymentAlternativeExchangeRate, ref cantidadDecimales);
-            //if (nodePaymentAlternativeExchangeRate != null && nodePaymentAlternativeExchangeRate.HasElements)
-            //{
-            //    documentXML.Add(nodePaymentAlternativeExchangeRate);
-            //}
+            doc.Add(documentXML);
 
-            //if (BillingObj.TaxTotal != null)
-            //{
-            //    foreach (TaxTotal tax in BillingObj.TaxTotal)
-            //    {
-            //        XElement nodeTaxTotal = FillTaxTotal(cac, tax, ref cantidadDecimales, BillingObj.ValorPorDefectoRedondeoAplicado);
-            //        if (nodeTaxTotal != null && nodeTaxTotal.HasElements)
-            //        {
-            //            documentXML.Add(nodeTaxTotal);
-            //        }
-            //    }
-            //}
-
-            //if (BillingObj.WithholdingTaxTotal != null)
-            //{
-            //    foreach (WithholdingTaxTotal taxR in BillingObj.WithholdingTaxTotal)
-            //    {
-            //        XElement nodeWithholdingTaxTotal = FillWithholdingTaxTotal(cac, taxR, ref cantidadDecimales);
-            //        if (nodeWithholdingTaxTotal != null && nodeWithholdingTaxTotal.HasElements)
-            //        {
-            //            documentXML.Add(nodeWithholdingTaxTotal);
-            //        }
-            //    }
-            //}
-
-            //XElement nodelegalMonetary = FillLegalMonetaryTotal("LegalMonetaryTotal", ref cantidadDecimales, BillingObj);
-            //if (nodelegalMonetary != null && nodelegalMonetary.HasElements)
-            //{
-            //    documentXML.Add(nodelegalMonetary);
-            //}
-
-            //FillInvoiceLine(cac, ref documentXML, "InvoiceLine", "Invoiced", ref cantidadDecimales, BillingObj);
-
-            //doc.Add(documentXML);
-
-            //string xmlPlano = doc.ToString();
+            string xmlPlano = doc.ToString();
 
             ////Si tiene algun nodo de sector salud o de exportacion corrige el CustomTagGeneral
-            //if (BillingObj.TieneNodoSectorSalud())
-            //{
-            //    ReemplazarPrimeraOcurrenciaTexto(ref xmlPlano, "<CustomTagGeneral", ">", "<CustomTagGeneral>");
-            //    ReemplazarPrimeraOcurrenciaTexto(ref xmlPlano, "<Group", "=", "<Group schemeName=");
-            //}
-            //else
-            //{
-            //    foreach (ExtensiblesNote extensiblesNote in BillingObj.Extensible)
-            //    {
-            //        if (extensiblesNote != null && extensiblesNote.Type == "XML")
-            //        {
-            //            if (extensiblesNote.ID == "FEXP1" || extensiblesNote.ID == "FEXP2" || extensiblesNote.ID == "FEXP3")
-            //            {
-            //                ReemplazarPrimeraOcurrenciaTexto(ref xmlPlano, "<CustomTagGeneral", ">", "<CustomTagGeneral>");
-            //                ReemplazarPrimeraOcurrenciaTexto(ref xmlPlano, "<Group", "=", "<Group schemeName=");
-            //            }
-            //            else if (extensiblesNote.Name == "INTE1")
-            //            {
-            //                ReemplazarPrimeraOcurrenciaTexto(ref xmlPlano, "<CustomTagGeneral xmlns", ">", "<CustomTagGeneral>");
-            //            }
-            //        }
-            //    }
-            //}
-            string xmlPlano = documentXML.ToString();
+
             return HelpersCodificador.EncodeBase64(xmlPlano);
         }
 
